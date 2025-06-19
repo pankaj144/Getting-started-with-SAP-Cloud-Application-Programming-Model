@@ -21,13 +21,14 @@ entity Authors : cuid, managed {
         dateofDeath        : Date;
 }
 
-entity Books : cuid, managed{
-    author: Association to Authors; //a author should be there
-    stock : NoOfBooks;
-    price : Price;
-    genre : Genre;
+
+entity Books : cuid, managed {
     title       : localized String(255);
+    author      : Association to Authors;
+    genre       : Genre;
     publCountry : Country;
+    stock       : NoOfBooks;
+    price       : Price;
     isHardcover : Boolean;
 }
 
