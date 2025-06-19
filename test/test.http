@@ -1,0 +1,24 @@
+@baseUrl1 = http://localhost:4004/odata/v4
+
+@baseUrl = http://localhost:4004
+
+# Get Service Document
+GET {{baseUrl}}/admin
+
+###----------------------------
+#test hello world
+GET {{baseUrl1}}/hello/sayHello(name='World')
+
+### ------------------------------------------------------------------------
+# Get Service Metadata Document
+GET {{baseUrl}}/admin/$metadata
+
+
+### ------------------------------------------------------------------------
+# Get all books with inlined author
+GET {{baseUrl}}/admin/Books?$expand=author
+
+
+### ------------------------------------------------------------------------
+# Get all authors with inlined books
+GET {{baseUrl}}/admin/Authors?$expand=books
