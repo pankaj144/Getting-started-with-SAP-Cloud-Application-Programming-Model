@@ -13,24 +13,32 @@ entity Epochs : CodeList {
 }
 
 entity Authors : cuid, managed {
-        books              : Association to many Books
-                             on books.author = $self;
-        name               : String(20);
-        epoch              : Association to Epochs;
-        dateOfBirth        : Date;
-        dateofDeath        : Date;
+    name        : String(100)           @mandatory;
+    dateOfBirth : Date;
+    dateOfDeath : Date;
+    epoch       : Association to Epochs @assert.target;
+    books       : Association to many Books
+                      on books.author = $self;
 }
+
+annotate Authors with {
+    modifiedAt @odata.etag  //Optimistic Locking
+};
 
 
 entity Books : cuid, managed {
-    title       : localized String(255);
-    author      : Association to Authors;
-    genre       : Genre;
+    title       : localized String(255) @mandatory;
+    author      : Association to Authors @mandatory @assert.target;
+    genre       : Genre @assert: true;
     publCountry : Country;
-    stock       : NoOfBooks;
+    stock       : NoOfBooks default 0;
     price       : Price;
     isHardcover : Boolean;
 }
+
+annotate Books with {
+    modifiedAt @odata.etag; //Optimistic Locking
+};
 
 
 
