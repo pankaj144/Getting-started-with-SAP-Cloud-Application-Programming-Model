@@ -215,3 +215,37 @@ Content-Type: application/json
   "dateOfDeath": "1805-05-09",
   "epoch": {"ID": 120}
 }
+
+###
+GET {{baseUrl}}/admin/Authors('ffdd2d3e-6604-427d-aca8-c08edafb0c71')
+
+@ETag2 = {{createNewAuthor.response.headers.ETag}}
+
+@authorID = {{createNewAuthor.response.body.$.ID}}
+### ------------------------------------------------------------------------
+# Create a new author with error
+PUT  {{baseUrl}}/admin/Authors({{authorID}})
+If-Match: {{ETag2}}
+Content-Type: application/json
+
+{
+  "name": "Update Author",
+  "dateOfBirth": "1759-11-10",
+  "dateOfDeath": "1605-05-09",
+
+}
+
+###
+
+POST {{baseUrl}}/admin/Authors
+Content-Type: application/json
+
+{
+  "name": "New Data Author",
+  "dateOfBirth": "1759-11-10",
+  "dateOfDeath": "1605-04-08",
+  "epoch": {"ID": 120}
+}
+
+
+#d0a57b3e-9a66-42d8-9fea-749db58f98d1
