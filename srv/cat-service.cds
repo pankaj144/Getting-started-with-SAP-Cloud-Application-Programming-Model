@@ -22,5 +22,9 @@ service CatalogService @(path: '/cat'){
         price.currency,
         stock,
         author
+    };
+
+    action submitOrder(book: db.Books:ID, quantity: Integer) returns {
+        stock: db.Books:stock;
     }
 }

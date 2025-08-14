@@ -249,3 +249,105 @@ Content-Type: application/json
 
 
 #d0a57b3e-9a66-42d8-9fea-749db58f98d1
+
+
+### ----------------------Custom Action--------------------------------------------------
+# Get Service Metadata Document
+GET {{baseUrl}}/cat/$metadata
+
+
+
+### ------------------------------------------------------------------------
+# Retrieve the ID of the book with the title 'Faust'
+# Use this ID to call the submitOrder action
+# @name getBookID
+GET {{baseUrl}}/cat/Books?$filter=title eq 'Faust'
+
+###
+
+@bookID = {{getBookID.response.body.$.value[0].ID}}
+
+POST {{baseUrl}}/cat/submitOrder
+Content-Type: application/json
+
+{
+  "book": "{{bookID}}",
+  "quantity": 2
+}
+
+
+
+### ------------------------------------------------------------------------
+# Call the submitOrder action with a quantity of 0 -> error
+POST {{baseUrl}}/cat/submitOrder
+Content-Type: application/json
+
+{
+  "book": "{{bookID}}",
+  "quantity": 0
+}
+
+### ------------------------------------------------------------------------
+# Call the submitOrder action with a quantity that exceeds stock -> error
+POST {{baseUrl}}/cat/submitOrder
+Content-Type: application/json
+
+{
+  "book": "{{bookID}}",
+  "quantity": 999999
+}
+
+
+
+### ------------------------------------------------------------------------
+# Call the submitOrder action with an invalid book ID -> error
+POST {{baseUrl}}/cat/submitOrder
+Content-Type: application/json
+
+{
+  "book": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+  "quantity": 2
+}
+
+###
+
+POST {{baseUrl}}/cat/submitOrder
+Accept-Language: de
+Content-Type: application/json
+
+{
+  "book": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+  "quantity": 2
+}
+
+
+
+
+
+### ------------------------------------------------------------------------
+# Create a new author using the admin service 
+# with the date of death before the date of birth -> error
+# Check the returned error message in German and in English (Accept-Language) 
+POST {{baseUrl}}/admin/Authors
+Accept-Language: en   
+Content-Type: application/json
+
+{
+  "name": "Friedrich Schiller",
+  "dateOfBirth": "1759-11-10",
+  "dateOfDeath": "1705-05-09", 
+  "epoch": {"ID": 120}
+}
+
+###
+
+POST {{baseUrl}}/admin/Authors
+Accept-Language: de 
+Content-Type: application/json
+
+{
+  "name": "Friedrich Schiller",
+  "dateOfBirth": "1759-11-10",
+  "dateOfDeath": "1705-05-09", 
+  "epoch": {"ID": 120}
+}
