@@ -15,38 +15,47 @@
   "devDependencies": {
     "@cap-js/cds-types": "^0.10.0",
     "@cap-js/sqlite": "^1.11.1",
-    "@sap/cds-dk": "^8"
+    "@sap/cds-dk": "^8",
+    "rimraf": "^5.0.5",
+    "mbt": "^1.2.29"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-booklist": "cds watch --open booklist/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy pkFirstCapApp --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "cds": {
     "sql": {
       "native_hana_associations": false
     },
     "requires": {
-      "db":{
-        "[development]":{
+      "db": {
+        "[development]": {
           "kind": "sqlite",
           "credentials": {
-            "url":":memory:"
+            "url": ":memory:"
           }
         }
       },
       "auth": {
         "kind": "mocked",
         "users": {
-          "adminuser":{
+          "adminuser": {
             "password": "abcd1234",
             "roles": [
               "admin"
             ]
           },
-          "catuser":{
+          "catuser": {
             "password": "abcd1234"
           }
         }
       }
     }
-  }
+  },
+  "sapux": [
+    "app/booklist"
+  ]
 }

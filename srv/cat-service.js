@@ -54,7 +54,7 @@ class CatalogService extends cds.ApplicationService{
 
     grantDiscount(results) {
         for(let b of results){
-            if(b.stock > 200){ b.title += ' -- 11% Discount!'; }
+            if(b.stock > 10){ b.title += ' -- 11% Discount!'; }
         }
     }
 
