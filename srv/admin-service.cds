@@ -8,3 +8,8 @@ service AdminService @(path: '/admin'){
     entity Books as projection on db.Books;
     entity Authors as projection on db.Authors;
 }
+
+/**
+ * enabled draft to the user
+ */
+annotate AdminService with @odata.draft.enabled;

@@ -128,7 +128,17 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Books"
+              "contextPath": "/Books",
+              "controlConfiguration": {
+                "texts/@com.sap.vocabularies.UI.v1.LineItem#i18nTestToEdit": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "creationMode": {
+                      "name": "Inline"
+                    }
+                  }
+                }
+              }
             }
           }
         }
