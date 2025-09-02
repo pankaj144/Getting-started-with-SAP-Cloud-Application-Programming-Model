@@ -11,7 +11,7 @@ using {
 entity Epochs : CodeList {
     key ID: Integer;
 }
-
+@odata.draft.enabled
 entity Authors : cuid, managed {
     name        : String(100)           @mandatory;
     dateOfBirth : Date;
@@ -25,7 +25,7 @@ annotate Authors with {
     modifiedAt @odata.etag  //Optimistic Locking
 };
 
-
+@odata.draft.enabled
 entity Books : cuid, managed {
     title       : localized String(255) @mandatory;
     author      : Association to Authors @mandatory @assert.target;
@@ -61,6 +61,8 @@ define type Genre : Integer enum{
     fiction     = 1;
     non_fiction = 2;
 }
+
+
 
 
 

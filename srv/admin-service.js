@@ -8,7 +8,7 @@ class AdminService extends cds.ApplicationService{
          // Validate the life data entered for an author
         this.before(['CREATE','UPDATE'], Authors, this.validateLifeData);
 
-         this.after('READ', Books, this.grantDiscount);
+        this.after('READ', Books, this.grantDiscount);
         
         return super.init();
     }
@@ -35,3 +35,4 @@ class AdminService extends cds.ApplicationService{
 }
 
 module.exports = AdminService;
+

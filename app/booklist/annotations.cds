@@ -44,8 +44,8 @@ annotate service.Books with @(
             },
             {
                 $Type : 'UI.DataField',
-                Value : author.ID,
-                Label : 'Author',
+                Value : author_ID,
+                Label : 'author_ID',
             },
         ],
     },
@@ -68,12 +68,6 @@ annotate service.Books with @(
                     Target : '@UI.FieldGroup#i18nDetails',
                 },
             ],
-        },
-        {
-            $Type : 'UI.ReferenceFacet',
-            Label : '{i18n>TestToEdit}',
-            ID : 'i18nTestToEdit',
-            Target : 'texts/@UI.LineItem#i18nTestToEdit',
         },
     ],
     UI.LineItem : [
@@ -188,28 +182,20 @@ annotate service.Books with {
 };
 
 annotate service.Books with {
-    genre @Common.Label : '{i18n>Genre}'
-};
-
-annotate service.Authors with {
-    ID @(
+    genre @(
+        Common.Label : '{i18n>Genre}',
         Common.ValueList : {
             $Type : 'Common.ValueListType',
-            CollectionPath : 'Authors',
+            CollectionPath : 'Books',
             Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : ID,
-                    ValueListProperty : 'ID',
-                },
-                {
-                    $Type : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'name',
+                    LocalDataProperty : genre,
+                    ValueListProperty : 'genre',
                 },
             ],
-            Label : '{i18n>Author}',
         },
-        Common.ValueListWithFixedValues : true,
+        Common.ValueListWithFixedValues : false,
     )
 };
 
@@ -254,4 +240,24 @@ annotate service.Books.texts with @(
         },
     ]
 );
+
+annotate service.Authors with {
+    ID @(
+        Common.FieldControl : #Mandatory,
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Authors',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : ID,
+                    ValueListProperty : 'ID',
+                },
+            ],
+            Label : 'Author',
+        },
+        Common.ValueListWithFixedValues : true,
+        Common.Text : name,
+        )
+};
 
